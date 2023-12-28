@@ -1,0 +1,69 @@
+TASK: Install docker on EC2 and explore the docker commands (docker images, containers)
+========================================================================================
+
+Got https://aws.amazon.com/console/
+Login with IAM User
+On Dashboard, will serach for EC2 (Elastic Compute Cloud)
+Launch instance with:
+a) Ubuntu Server 22.04 LTS (Life Time Support)
+b) 1 vCPU
+c) 1 GiB Memory
+d) 8 GiB gp2 (root volume)
+e) key_pair
+f) Auto-assign public IP: Enable
+g) Firewall (security groups): ssh (i.e, port no. 22)
+
+
+
+Once we connected on GitBash using ssh, will do the following:
+
+ubuntu@ip-192-0-0-97:~$sudo apt update
+ubuntu@ip-192-0-0-97:~$sudo apt install docker.io -y
+ubuntu@ip-192-0-0-97:~$sudo docker -v
+ubuntu@ip-192-0-0-97:~$sudo usermod -aG docker ubuntu
+exit from terminal and open it again
+ubuntu@ip-192-0-0-97:~$ docker -v
+ubuntu@ip-192-0-0-97:~$ sudo -i
+root@ip-192-0-0-97:~# $docker pull node
+Using default tag: latest
+latest: Pulling from library/node
+bc0734b949dc: Pull complete
+b5de22c0f5cd: Pull complete
+917ee5330e73: Pull complete
+b43bd898d5fb: Pull complete
+9b5852c9e7e7: Pull complete
+5b6382a075a3: Pull complete
+773b85e76785: Pull complete
+004ced7a943e: Pull complete
+Digest: sha256:73a9c498369c6e6f864359979c8f4895f28323c07411605e6c870d696a0143fa
+Status: Downloaded newer image for node:latest
+docker.io/library/node:latest
+root@ip-192-0-0-97:~# cd Containers-Day-2\:Containers/
+root@ip-192-0-0-97:~# Containers-Day-2:Containers# nano Task_EC2_Instance
+root@ip-192-0-0-97:~# Containers-Day-2:Containers# cd
+root@ip-192-0-0-97:~# docker pull httpd
+Using default tag: latest
+latest: Pulling from library/httpd
+af107e978371: Already exists
+eba4da411ea0: Pull complete
+4f4fb700ef54: Pull complete
+ed4d6291a6c2: Pull complete
+b42c390e1de9: Pull complete
+eafe388a0bb8: Pull complete
+Digest: sha256:f0a93744d8006e6f7ee5086c9ddccdcfa33d1091f15269a00547b4c382459c1f
+Status: Downloaded newer image for httpd:latest
+docker.io/library/httpd:latest
+root@ip-192-0-0-97:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+app.v1       latest    cb7e41b8b541   24 hours ago   180MB
+node         latest    b678102cb2bf   7 days ago     1.1GB
+ubuntu       latest    174c8c134b2a   2 weeks ago    77.9MB
+nginx        latest    d453dd892d93   2 months ago   187MB
+httpd        latest    6fd77d7e5eb7   2 months ago   167MB
+root@ip-192-0-0-97:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ip-192-0-0-97:~# docker run -d -p 8080:80 --name apcahe httpd
+268bcfeb3933e13c60f7a608df0e9ae4f14f8a9479a6f8a58b4b541e7beaf429
+root@ip-192-0-0-97:~# docker ps
+CONTAINER ID   IMAGE     COMMAND              CREATED         STATUS         PORTS                                   NAMES
+268bcfeb3933   httpd     "httpd-foreground"   5 seconds ago   Up 4 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp   apcahe
